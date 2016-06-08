@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import json
+
 from urllib.parse import urlparse
 db_url = urlparse(os.environ.get('OPENSHIFT_POSTGRESQL_DB_URL'))
 
@@ -28,11 +30,14 @@ DATA_DIR = os.environ.get('OPENSHIFT_DATA_DIR', BASE_DIR)
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = 'de08@5*uwyczcv_j(#)&k%z#kcjkx*sg6v9gy1ma7ni#30tiki'
 
-import sys
-sys.path.append(os.path.join(REPO_DIR, 'libs'))
-print(sys.path)
-import secrets
-SECRETS = secrets.getter(os.path.join(DATA_DIR, 'secrets.json'))
+def getter(path):
+    try:
+        with open(path) as handle:
+            return json.load(handle)
+    except IOError:
+        return __secrets
+
+SECRETS = getter(os.path.join(DATA_DIR, 'secrets.json'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
