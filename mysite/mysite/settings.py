@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
-import from urllib.parse import urlparse
+from urllib.parse import urlparse
 db_url = urlparse(os.environ.get('OPENSHIFT_POSTGRESQL_DB_URL'))
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
