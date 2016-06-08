@@ -1,3 +1,6 @@
+# set path
+export PATH=$OPENSHIFT_DATA_DIR/bin:$PATH
+
 echo "Executing 'python ${OPENSHIFT_REPO_DIR}mysite/manage.py syncdb --noinput'"
 python3 "$OPENSHIFT_REPO_DIR"mysite/manage.py migrate --noinput
 
