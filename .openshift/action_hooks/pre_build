@@ -1,0 +1,58 @@
+#!/bin/bash
+# This is a simple script and will be executed on your CI system if
+# available.  Otherwise it will execute while your application is stopped
+# before the build step.  This script gets executed directly, so it
+# could be python, php, ruby, etc.
+
+if [ ! -d $OPENSHIFT_DATA_DIR/bin ]; then
+  #echo $OPENSHIFT_DATA_DIR
+  #Check if python3 exists
+  if python3 -V >/dev/null; then
+    #If Python3 exists check that the version is 3.5.1
+    if [ "$OPENSHIFT_DATA_DIR/bin/python3 -V" != 'Python 3.5.1' ]; then
+      # install python 3.5.1
+      cd $OPENSHIFT_TMP_DIR
+      wget https://www.python.org/ftp/python/3.5.1/Python-3.5.1.tgz
+      tar -zxf Python-3.5.1.tgz
+      cd Python-3.5.1
+      ./configure --prefix=$OPENSHIFT_DATA_DIR > /dev/null
+      make install
+    fi
+  else
+    # install python 3.5.1
+    cd $OPENSHIFT_TMP_DIR
+    wget https://www.python.org/ftp/python/3.5.1/Python-3.5.1.tgz
+    tar -zxf Python-3.5.1.tgz
+    cd Python-3.5.1
+    ./configure --prefix=$OPENSHIFT_DATA_DIR > /dev/null
+    make install
+  fi
+
+
+  # set path
+  export PATH=$OPENSHIFT_DATA_DIR/bin:$PATH
+
+  python3 -V
+  cd $OPENSHIFT_TMP_DIR
+  wget https://bootstrap.pypa.io/get-pip.py
+  python3 get-pip.py
+  # install setuptools and pip
+  # cd $OPENSHIFT_TMP_DIR
+  # wget https://pypi.python.org/packages/90/7a/b64d5804b6d1aebed1892e4df1c21bcb4f8480095ba8004e48999601119d/setuptools-22.0.5.tar.gz#md5=869f3029dcc66a64ba39875e2a2f044a
+  # #wget http://pypi.python.org/packages/source/s/setuptools/setuptools-0.6c11.tar.gz
+  # tar zxf setuptools-22.0.5.tar.gz
+  # cd setuptools-22.0.5
+  # python3 setup.py install
+  # cd $OPENSHIFT_TMP_DIR
+  # wget https://pypi.python.org/packages/e7/a8/7556133689add8d1a54c0b14aeff0acb03c64707ce100ecd53934da1aa13/pip-8.1.2.tar.gz#md5=87083c0b9867963b29f7aba3613e8f4a
+  # #wget http://pypi.python.org/packages/source/p/pip/pip-1.1.tar.gz
+  # tar zxf pip-8.1.2.tar.gz
+  # cd pip-8.1.2
+  # python3 setup.py install
+
+  # install uwsgi
+  pip3 install uwsgi
+
+  # cleanup
+  rm -rf $OPENSHIFT_TMP_DIR/*
+fi
