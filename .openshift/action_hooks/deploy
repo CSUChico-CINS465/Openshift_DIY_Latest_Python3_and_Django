@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# set path
+export PATH=$OPENSHIFT_DATA_DIR/bin:$PATH
+
 if [ ! -f "$OPENSHIFT_DATA_DIR"secrets.json ]; then
 	echo "Generating $OPENSHIFT_DATA_DIR/secrets.json"
 	python3 "$OPENSHIFT_REPO_DIR"libs/secrets.py > "$OPENSHIFT_DATA_DIR"secrets.json
