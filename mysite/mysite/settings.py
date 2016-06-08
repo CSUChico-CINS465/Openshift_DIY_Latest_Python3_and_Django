@@ -19,12 +19,19 @@ db_url = urlparse(os.environ.get('OPENSHIFT_POSTGRESQL_DB_URL'))
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WSGI_DIR = os.path.dirname(BASE_DIR)
+REPO_DIR = os.path.dirname(WSGI_DIR)
+DATA_DIR = os.environ.get('OPENSHIFT_DATA_DIR', BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'de08@5*uwyczcv_j(#)&k%z#kcjkx*sg6v9gy1ma7ni#30tiki'
+#SECRET_KEY = 'de08@5*uwyczcv_j(#)&k%z#kcjkx*sg6v9gy1ma7ni#30tiki'
+
+import sys
+sys.path.append(os.path.join(REPO_DIR, 'libs'))
+import secrets
+SECRETS = secrets.getter(os.path.join(DATA_DIR, 'secrets.json'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
