@@ -16,7 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from testsite import views as testsite
+
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', 'testsite.views.home'),
+    url(r'^$', 'testsite.home'),
 ]
