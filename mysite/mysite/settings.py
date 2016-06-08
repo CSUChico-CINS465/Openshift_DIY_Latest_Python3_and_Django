@@ -36,6 +36,7 @@ def getter(path):
             return json.load(handle)
     except IOError:
         return __secrets
+        
 
 SECRETS = getter(os.path.join(DATA_DIR, 'secrets.json'))
 
