@@ -1,0 +1,5 @@
+echo "Executing 'python ${OPENSHIFT_REPO_DIR}mysite/manage.py syncdb --noinput'"
+python "$OPENSHIFT_REPO_DIR"mysite/manage.py migrate --noinput
+
+echo "Executing 'python ${OPENSHIFT_REPO_DIR}mywebsite/manage.py collectstatic --noinput -v0'"
+python "$OPENSHIFT_REPO_DIR"mysite/manage.py collectstatic --noinput -v0
