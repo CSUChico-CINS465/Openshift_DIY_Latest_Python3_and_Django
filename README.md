@@ -15,7 +15,7 @@ git pull -s recursive -X theirs upstream master
 git push
 ````
 
-And watch the scripts do their thing. This will take a while and will result in a ton of text in your terminal window. If you want to reduce this you can make the compilation of Python3.5.1 silent by changing the lines in the *.openshift/action_hooks/pre_build* script that say ***make install*** to instead read as follows as this will pipe this output to */dev/null* instead of to the terminal:
+And watch the scripts do their thing. This will take a while and will result in a ton of text in your terminal window. If you want to reduce this you can make the compilation of Python3.5.1 silent by changing the lines in the *.openshift/action_hooks/pre_build* script that say ***make install*** to instead read as follows, as this will pipe this output to */dev/null* instead of to the terminal:
 
 ````shell
 make install > /dev/null
