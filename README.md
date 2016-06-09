@@ -24,6 +24,7 @@ make install > /dev/null
 Once the scripts are done, you should have a running Django webserver that's singular home view will display the system python version at your cartridge's web address.
 
 This code was cobbled together from openshift code examples found at the following sites:
-http://www.indjango.com/deploying-django-app-on-openshift/
-https://bitbucket.org/diy/openshift-diy-py27-django
-https://github.com/Praisebetoscience/openshift-cartridge-python-3.5
+
+* http://www.indjango.com/deploying-django-app-on-openshift/
+* https://bitbucket.org/diy/openshift-diy-py27-django
+* https://github.com/Praisebetoscience/openshift-cartridge-python-3.5
