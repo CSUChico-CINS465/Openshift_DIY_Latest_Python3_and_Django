@@ -10,7 +10,7 @@ The rhc tool doesn't always create the app folder for me and I've run into issue
 
 ````shell
 rhc cartridge add -c postgresql-9.2 -a <app-name>
-git remote add upstream -m master git@github.com:CSUChico-CINS465/OpenshiftPython3.5DjangoDIY.git
+git remote add upstream -m master git@github.com:CSUChico-CINS465/Openshift_DIY_Latest_Python3_and_Django.git
 git pull -s recursive -X theirs upstream master
 git push
 ````
