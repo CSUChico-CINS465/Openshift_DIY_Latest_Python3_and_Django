@@ -1,2 +1,7 @@
 *.log
 *.pyc
+*.py[co]
+*.sw[po]
+*.bak
+*.orig
+*~
