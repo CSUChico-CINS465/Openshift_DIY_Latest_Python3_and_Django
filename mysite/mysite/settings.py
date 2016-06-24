@@ -14,7 +14,12 @@ import os
 import json
 
 from urllib.parse import urlparse
-db_url = urlparse(os.environ.get('OPENSHIFT_POSTGRESQL_DB_URL'))
+
+ON_OPENSHIFT = False
+if 'OPENSHIFT_REPO_DIR' in os.environ:
+    ON_OPENSHIFT = True
+
+
 
 
 
@@ -22,7 +27,8 @@ db_url = urlparse(os.environ.get('OPENSHIFT_POSTGRESQL_DB_URL'))
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WSGI_DIR = os.path.dirname(BASE_DIR)
 REPO_DIR = os.path.dirname(WSGI_DIR)
-DATA_DIR = os.environ.get('OPENSHIFT_DATA_DIR', BASE_DIR)
+if ON_OPENSHIFT:
+    DATA_DIR = os.environ.get('OPENSHIFT_DATA_DIR', BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -36,9 +42,11 @@ def getter(path):
             return json.load(handle)
     except IOError:
         return __secrets
-        
 
-SECRETS = getter(os.path.join(DATA_DIR, 'secrets.json'))
+if ON_OPENSHIFT:
+    SECRETS = getter(os.path.join(DATA_DIR, 'secrets.json'))
+else:
+    SECRETS = getter(os.path.join(BASE_DIR, 'secrets.json'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -98,16 +106,25 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ['OPENSHIFT_APP_NAME'],
-        'USER': db_url.username,
-        'PASSWORD': db_url.password,
-        'HOST': db_url.hostname,
-        'PORT': db_url.port,
+if ON_OPENSHIFT:
+    db_url = urlparse(os.environ.get('OPENSHIFT_POSTGRESQL_DB_URL'))
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['OPENSHIFT_APP_NAME'],
+            'USER': db_url.username,
+            'PASSWORD': db_url.password,
+            'HOST': db_url.hostname,
+            'PORT': db_url.port,
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 
 # Password validation

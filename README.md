@@ -28,3 +28,4 @@ This code was cobbled together from openshift code examples found at the followi
 * http://www.indjango.com/deploying-django-app-on-openshift/
 * https://bitbucket.org/diy/openshift-diy-py27-django
 * https://github.com/Praisebetoscience/openshift-cartridge-python-3.5
+* http://stackoverflow.com/questions/26871381/deploying-a-local-django-app-using-openshift
