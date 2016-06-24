@@ -23,6 +23,8 @@ make install > /dev/null
 
 Once the scripts are done, you should have a running Django webserver that's singular home view will display the system python version at your cartridge's web address.
 
+You can also work on the local copy as a development version of the site that uses a sqlite backend. Due to openshift2's nature you'll need to make migrations on the development server and push them to the remote server for changes to happen on the remote. 
+
 This code was cobbled together from openshift code examples found at the following sites:
 
 * http://www.indjango.com/deploying-django-app-on-openshift/
